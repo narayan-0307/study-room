@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+venv*/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django
+*.sqlite3
+db.sqlite3
+*.log
+*.pot
+*.pyc
+local_settings.py
+secret_key.txt
+
+# Env / secrets
+.env
+.env.*
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Static and media (optionally)
+staticfiles/
+media/
+# If you build static before pushing, don't ignore staticfiles
+
+# Mac/Linux
+.DS_Store

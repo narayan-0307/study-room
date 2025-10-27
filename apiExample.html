@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cool Website</title>
+  </head>
+  <body>
+    <h1>Cool Rooms</h1>
+    <div id="room-container"></div>
+    <div id="room-details"></div>
+
+    <script>
+      let roomContainer = document.getElementById("room-container");
+      let roomDetails = document.getElementById("room-details");
+
+      // Function to fetch and display all rooms
+      let getRooms = async () => {
+        try {
+          let response = await fetch("http://127.0.0.1:8000/api/rooms/");
+          let rooms = await response.json();
+
+          rooms.forEach((room) => {
+            let link = document.createElement("a");
+            link.href = "#";
+            link.textContent = room.name;
+            link.addEventListener("click", () => getRoomDetails(room.id));
+            let row = document.createElement("div");
+            row.appendChild(link);
+            roomContainer.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Error fetching rooms:", error);
+        }
+      };
+
+      // Function to fetch and display details of a specific room
+      let getRoomDetails = async (roomId) => {
+        try {
+          // Use backticks for proper string interpolation
+          let response = await fetch(
+            `http://127.0.0.1:8000/api/rooms/${roomId}/`
+          );
+          let room = await response.json();
+
+          // Display room details
+          roomDetails.innerHTML = `
+            <h2>${room.name}</h2>
+            <p><strong>ID:</strong> ${room.id}</p>
+            <p><strong>Description:</strong> ${room.description || "N/A"}</p>
+            <p><strong>created:</strong> ${room.created || "N/A"}</p>
+            <p><strong>updated:</strong> ${room.updated || "N/A"}</p>
+            <p><strong>topic:</strong> ${room.topic || "N/A"}</p>
+            <p><strong>host:</strong> ${room.host || "N/A"}</p>
+            <p><strong>Participants:</strong> ${room.participants || "N/A"}</p>
+          `;
+        } catch (error) {
+          console.error("Error fetching room details:", error);
+        }
+      };
+
+      // Initialize room list
+      getRooms();
+    </script>
+  </body>
+</html>
